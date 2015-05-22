@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this template, choose Tools | Templates
@@ -133,23 +135,24 @@ public class Ajouter_Appareil_Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_MACActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            String host="jdbc:mysql://localhost/java_projet";
-            String username="root";
-            String password="";
-       // String Name = Nom.getText();
-     try {
-        Connection con = DriverManager.getConnection( host, username, password );
-        Statement statement = con.createStatement(); 
+        Database_cnx cnx = new Database_cnx();
+        cnx.connection();
+        Statement statement = null; 
+        try {
+            statement = cnx.connection().createStatement();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Ajouter_Appareil_Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String Name = Nom.getText();
         String adresse_MAC = MAC.getText();
         String type_equipement = Type.getText();
-        statement.executeUpdate("INSERT INTO equipement " + "VALUES (5, '"+type_equipement+"', 5, 0, '"+adresse_MAC+"', '-', '"+Name+"', 0, 1)"); 
-        System.out.println("Inserted");
+        try { 
+            statement.executeUpdate("INSERT INTO equipement " + "VALUES (5, '"+type_equipement+"', 5, 0, '"+adresse_MAC+"', '-', '"+Name+"', 0, 1)");
+        } catch (SQLException ex) {
+            Logger.getLogger(Ajouter_Appareil_Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
-    catch ( SQLException err ) {
-    System.out.println( err.getMessage( ) );
-    } 
+        System.out.println("Inserted");
                // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 

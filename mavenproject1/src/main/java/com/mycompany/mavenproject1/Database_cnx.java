@@ -15,17 +15,23 @@ import java.sql.SQLException;
  * @author Farid
  */
 public class Database_cnx {
-    public static void main(String[] args) {
-        String host="jdbc:mysql://localhost/java_projet";
+    
+    public Connection connection(){
+    String host="jdbc:mysql://localhost/java_projet";
         String username="root";
         String password="";
+        Connection con = null;
      try {
-        Connection con = DriverManager.getConnection( host, username, password );
+        con = DriverManager.getConnection( host, username, password );
         System.out.println("Worked");
-        
     }
     catch ( SQLException err ) {
     System.out.println( err.getMessage( ) );
     }
+    return con;
+    }
+    
+    public static void main(String[] args) {
+     
   }
 }
