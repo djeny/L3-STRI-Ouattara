@@ -12,53 +12,42 @@ package com.mycompany.mavenproject1;
 
 public class Equipement {
     
+  private int    idEquipement;
+  private String categorie;
+  private String statut;
+  private String adresseMac;
+  private String nomEquipement;
+  
+  public Equipement(int idEquipement,String categorie,String statut,String adresseMac,String nomEquipement){
+      this.idEquipement=idEquipement;
+      this.categorie=categorie;
+      this.statut=statut;
+      this.adresseMac=adresseMac;
+      this.nomEquipement=nomEquipement;
+      
+  }
+  public int getidEquipement(){
+return idEquipement;
+}
+  
+   public String getcategorie(){
+return categorie;
+}
+  
+    public String getstatut(){
+return statut;
+}
     
-       private int idEquipement;
-       private int    idSalle;
-       private String categorie;
-       private String statutEquipement;
-    
-    
-    public void setIdEquipement(int idEquipement) {
-        this.idEquipement = idEquipement;
-    }
-
-    public void setIdSalle(int idSalle) {
-        this.idSalle = idSalle;
-    }
-
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
-    }
-
-    /* Déclare les attributs */
-    public void setStatutEquipement(String statutEquipement) {
-        this.statutEquipement = statutEquipement;
-    }
-        
-    
-    public Equipement(int idEquipement, int idSalle,String categorie, String statutEquipement ){
-        this.idEquipement       = idEquipement;
-        this.idSalle            = idSalle;
-        this.categorie          = categorie;
-        this.statutEquipement   = statutEquipement;
-    }
-    
-    public int getidEquipement(){
-        return idEquipement;
-    }
-    
-    public int getidSalle(){
-        return idSalle;
-    }
-    
-    public String getcategorie(){
-        return categorie;
-    }
-    
-    public String getstatutEquipement(){
-        return statutEquipement;
-    }
+       public String getadresseMac(){
+return adresseMac;
+}
+       
+             public String getnomEquipement(){
+return nomEquipement;
+}
+  
+  
+      
 /*
  public static void main(String args[]) {
     
