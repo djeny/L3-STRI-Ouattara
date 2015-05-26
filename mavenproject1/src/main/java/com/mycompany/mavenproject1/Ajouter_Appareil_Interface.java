@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javax.swing.Action.DEFAULT;
 
 /*
  * To change this template, choose Tools | Templates
@@ -103,7 +104,7 @@ public class Ajouter_Appareil_Interface extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Ajout d'un appareil");
 
@@ -321,12 +322,13 @@ public class Ajouter_Appareil_Interface extends javax.swing.JFrame {
      
         
        // System.out.println((String)valeur);      
-        Equipement e = new Equipement(9,categorie,statut,adresse_MAC,Name);
+        Equipement e = new Equipement(0,categorie,statut,adresse_MAC,Name);
         if (e.getstatut().equals("OFF"))
             status = 0;
         else
             status = 1;
         try {
+            // a faire: incrementer le nombre d'equipement dans la salle concernée
             statement.executeUpdate("INSERT INTO equipement " + "VALUES (DEFAULT, '"+e.getcategorie()+"', "+idSalle+", " + status + ", '"+e.getadresseMac()+"', '"+e.getnomEquipement()+"', DEFAULT, "+idOS+")");
             System.out.println("Inserted");
         } catch (SQLException ex) {
