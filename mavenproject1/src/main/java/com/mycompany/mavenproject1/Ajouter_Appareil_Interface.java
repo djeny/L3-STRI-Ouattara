@@ -19,34 +19,32 @@ import java.util.logging.Logger;
  * @author Farid
  */
 public class Ajouter_Appareil_Interface extends javax.swing.JFrame {
-       Database_cnx cnx = new Database_cnx();
+       Database_cnx cnx = new Database_cnx(); // connexion a la base de donnée
     /**
      * Creates new form Ajouter_Appareil_Interface
      */
     public Ajouter_Appareil_Interface() {
-        initComponents();
-       String insertLocal = "select nom_local FROM local";
+       initComponents();
+       // Les requetes SQL qui recuperent de la base de donnée les informations
+       String insertLocal = "select nom_local FROM local"; 
        String insertSalle = "select nom_salle FROM salle";
        String insertOS = "select nom_OS FROM os";
        
-        
-        //cnx.connection();
         try {
-          
-      //  System.out.println("Worked");
-          Statement stmt1 = cnx.connection().createStatement();
+          // Creation des Statements
+          Statement stmt1 = cnx.connection().createStatement(); 
           Statement stmt2 = cnx.connection().createStatement();
           Statement stmt3 = cnx.connection().createStatement();
-          ResultSet rset = stmt1.executeQuery(insertLocal);
+          // L'execution des query et l'insertion des resultat dans ResultSet
+          ResultSet rsetLocal = stmt1.executeQuery(insertLocal);
           ResultSet rsetSalle = stmt2.executeQuery(insertSalle);
           ResultSet rsetOS = stmt3.executeQuery(insertOS);
-          
       
            try {
-            while(rset.next())
+            while(rsetLocal.next())
             {
-             
-                LocalCombo.addItem(rset.getString("nom_local"));
+                // Tant qu'il y a des valeurs on les ajoute dans comboBox
+                LocalCombo.addItem(rsetLocal.getString("nom_local")); 
             } 
             
             while(rsetSalle.next())
@@ -221,8 +219,8 @@ public class Ajouter_Appareil_Interface extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(MAC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Nom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -257,8 +255,20 @@ public class Ajouter_Appareil_Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_MACActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    //    Database_cnx cnx = new Database_cnx();
+
         Statement statement = null; 
+        int status = 0;
+        int idSalle =0;
+        int idOS=0;
+        String Name;
+        String adresse_MAC;
+        String categorie;
+        String statut;
+        String nomsalle;
+        String nomOS;
+        Statement stmt4 = null;
+        Statement stmt5 = null;
+        
         try {
             statement = cnx.connection().createStatement();
             System.out.println("connected");
@@ -266,15 +276,33 @@ public class Ajouter_Appareil_Interface extends javax.swing.JFrame {
             Logger.getLogger(Ajouter_Appareil_Interface.class.getName()).log(Level.SEVERE, null, ex);
              System.out.println("not connected");
         }
-        String Name = Nom.getText();
-        String adresse_MAC = MAC.getText();
-        /*Object*/ String categorie =(String) CategorieCombo.getSelectedItem();
-        /*Object*/ String statut = (String) StatutCombo.getSelectedItem();
-        /*Object*/ String nomsalle= (String) SalleCombo.getSelectedItem();
+        Name = Nom.getText();
+        adresse_MAC = MAC.getText();
+        categorie =(String) CategorieCombo.getSelectedItem();
+        statut = (String) StatutCombo.getSelectedItem();
+        nomsalle= (String) SalleCombo.getSelectedItem();
+        nomOS= (String) OSCombo.getSelectedItem();
         
         String idsalle = "SELECT id_salle FROM salle WHERE nom_salle='"+nomsalle+"'";
-        Statement stmt4 = null;
-        int idSalle =0;
+        String idos = "SELECT id_OS FROM os WHERE nom_OS='"+nomOS+"'";
+        
+       
+         try {
+               stmt5 = cnx.connection().createStatement();
+           } catch (SQLException ex) {
+               Logger.getLogger(Ajouter_Appareil_Interface.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           try {
+               ResultSet RidOS = stmt5.executeQuery(idos);
+               while(RidOS.next()){
+               idOS =  RidOS.getInt(1);
+               }
+             
+               System.out.println(idSalle);
+           } catch (SQLException ex) {
+               Logger.getLogger(Ajouter_Appareil_Interface.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           
            try {
                stmt4 = cnx.connection().createStatement();
            } catch (SQLException ex) {
@@ -282,25 +310,24 @@ public class Ajouter_Appareil_Interface extends javax.swing.JFrame {
            }
            try {
                ResultSet RidSalle = stmt4.executeQuery(idsalle);
-               //System.out.println(idSalle);
-               idSalle =  RidSalle.getInt(idSalle); // PROBLEME
+               while(RidSalle.next()){
+               idSalle =  RidSalle.getInt(1);
+               }
+              // System.out.println(RidSalle); 
+               System.out.println(idSalle);
            } catch (SQLException ex) {
                Logger.getLogger(Ajouter_Appareil_Interface.class.getName()).log(Level.SEVERE, null, ex);
            }
      
-        int status = 0;
+        
        // System.out.println((String)valeur);      
         Equipement e = new Equipement(9,categorie,statut,adresse_MAC,Name);
         if (e.getstatut().equals("OFF"))
             status = 0;
         else
             status = 1;
-        //" + companyId + "
-        // idEquipement,String categorie,String statut,String adresseMac,String nomEquipement
-    //    System.out.println(e.getstatut("statut"));
-        try { 
-           //String nomSalle = statement.executeUpdate("SELECT id_salle FROM salle WHERE nom_salle='"+nomsalle+"'");
-            statement.executeUpdate("INSERT INTO equipement " + "VALUES (DEFAULT, '"+e.getcategorie()+"', "+idSalle+", " + status + ", '"+e.getadresseMac()+"', '"+e.getnomEquipement()+"', DEFAULT, 9)");
+        try {
+            statement.executeUpdate("INSERT INTO equipement " + "VALUES (DEFAULT, '"+e.getcategorie()+"', "+idSalle+", " + status + ", '"+e.getadresseMac()+"', '"+e.getnomEquipement()+"', DEFAULT, "+idOS+")");
             System.out.println("Inserted");
         } catch (SQLException ex) {
             Logger.getLogger(Ajouter_Appareil_Interface.class.getName()).log(Level.SEVERE, null, ex);
