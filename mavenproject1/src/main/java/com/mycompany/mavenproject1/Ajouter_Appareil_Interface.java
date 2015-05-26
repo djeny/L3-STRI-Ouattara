@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javax.swing.Action.DEFAULT;
+import javax.swing.JOptionPane;
 
 /*
  * To change this template, choose Tools | Templates
@@ -330,7 +331,7 @@ public class Ajouter_Appareil_Interface extends javax.swing.JFrame {
         try {
             // a faire: incrementer le nombre d'equipement dans la salle concernée
             statement.executeUpdate("INSERT INTO equipement " + "VALUES (DEFAULT, '"+e.getcategorie()+"', "+idSalle+", " + status + ", '"+e.getadresseMac()+"', '"+e.getnomEquipement()+"', DEFAULT, "+idOS+")");
-            System.out.println("Inserted");
+            JOptionPane.showMessageDialog(null, "L'appareil a bien été inserée");
         } catch (SQLException ex) {
             Logger.getLogger(Ajouter_Appareil_Interface.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Problem");

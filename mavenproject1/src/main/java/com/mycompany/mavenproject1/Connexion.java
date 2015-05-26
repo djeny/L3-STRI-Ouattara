@@ -67,7 +67,7 @@ public class Connexion extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Appareil 1");
 
@@ -195,9 +195,12 @@ public class Connexion extends javax.swing.JFrame {
             if (idappareil1 == idappareil2){
                 JOptionPane.showMessageDialog(null, "Veillez choisir 2 appareil differents");
             }
-            // "INSERT INTO DBUSER" + "(USER_ID, USERNAME, CREATED_BY, CREATED_DATE) VALUES" + "(?,?,?,?)";
+            else{
             statement.executeUpdate("INSERT INTO connexion VALUES (DEFAULT,"+idappareil1+","+idappareil2+")");
-        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "La connexion a bien été prise en compte");
+
+            }
+            } catch (SQLException ex) {
             Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
