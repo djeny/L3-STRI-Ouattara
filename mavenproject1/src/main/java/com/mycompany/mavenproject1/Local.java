@@ -16,16 +16,28 @@ public class Local {
     private int idLocal;
     private int nombreSalle;
     
-    
+    /**
+     *
+     * @param idLocal
+     * @param nombreSalle
+     */
     public Local(int idLocal, int nombreSalle){
         this.idLocal     = idLocal;
         this.nombreSalle = nombreSalle;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getidLocal(){
         return idLocal;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getnombreSalle(){
         return nombreSalle;
     }

@@ -18,7 +18,15 @@ public class Equipement {
   private String adresseMac;
   private String nomEquipement;
   
-  public Equipement(int idEquipement,String categorie,String statut,String adresseMac,String nomEquipement){
+    /**
+     *
+     * @param idEquipement
+     * @param categorie
+     * @param statut
+     * @param adresseMac
+     * @param nomEquipement
+     */
+    public Equipement(int idEquipement,String categorie,String statut,String adresseMac,String nomEquipement){
       this.idEquipement=idEquipement;
       this.categorie=categorie;
       this.statut=statut;
@@ -26,23 +34,44 @@ public class Equipement {
       this.nomEquipement=nomEquipement;
       
   }
-  public int getidEquipement(){
+
+    /**
+     *
+     * @return
+     */
+    public int getidEquipement(){
 return idEquipement;
 }
   
-   public String getcategorie(){
+    /**
+     *
+     * @return
+     */
+    public String getcategorie(){
 return categorie;
 }
   
+    /**
+     *
+     * @return
+     */
     public String getstatut(){
 return statut;
 }
     
-       public String getadresseMac(){
+    /**
+     *
+     * @return
+     */
+    public String getadresseMac(){
 return adresseMac;
 }
        
-             public String getnomEquipement(){
+    /**
+     *
+     * @return
+     */
+    public String getnomEquipement(){
 return nomEquipement;
 }
   

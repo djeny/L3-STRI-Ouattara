@@ -16,6 +16,10 @@ import java.sql.SQLException;
  */
 public class Database_cnx {
     
+    /**
+     *
+     * @return
+     */
     public Connection connection(){
     String host="jdbc:mysql://localhost/java_projet";
         String username="root";
@@ -31,6 +35,10 @@ public class Database_cnx {
     return con;
     }
     
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
      
   }

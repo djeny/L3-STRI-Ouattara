@@ -139,11 +139,16 @@ public class Interface extends javax.swing.JFrame {
         });
 
         jLabel4.setForeground(new java.awt.Color(255, 0, 51));
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Exo\\Desktop\\Logo.png")); // NOI18N
 
         LocalCombo2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LocalCombo2ActionPerformed(evt);
+            }
+        });
+
+        SalleCombo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalleCombo2ActionPerformed(evt);
             }
         });
 
@@ -190,8 +195,6 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\Exo\\Desktop\\strilogomini.png")); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -199,21 +202,6 @@ public class Interface extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Ajout_Connexion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Ajouter_Appareil, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(131, 131, 131))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LocalCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,7 +231,22 @@ public class Interface extends javax.swing.JFrame {
                                             .addComponent(AppareilCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel3))))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(Ajout_Connexion, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Ajouter_Appareil, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(119, 119, 119))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(69, 69, 69)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -298,7 +301,55 @@ public class Interface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LocalCombo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LocalCombo1ActionPerformed
-        // TODO add your handling code here:
+        String ChoixLocal;
+        Statement stmt1 = null;
+        Statement stmt2 = null;
+        int idLocalSelectionne=0;
+        ChoixLocal =(String) LocalCombo1.getSelectedItem();
+        String idLocal = "SELECT id_local FROM local WHERE nom_local='"+ChoixLocal+"'";
+
+        try {
+            stmt1 = cnx.connection().createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ResultSet RidLocal = null;
+        try {
+            RidLocal = stmt1.executeQuery(idLocal);
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            while(RidLocal.next()){
+            idLocalSelectionne =  RidLocal.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        String NomSalle = "SELECT nom_salle FROM salle WHERE id_local='"+idLocalSelectionne+"'";
+        // System.out.println(idLocalSelectionne);
+        try {
+            stmt2 = cnx.connection().createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ResultSet ListeSalle = null;
+        try {
+            ListeSalle = stmt2.executeQuery(NomSalle);
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        try {
+            SalleCombo1.removeAllItems();
+            while(ListeSalle.next()){
+            SalleCombo1.addItem(ListeSalle.getString("nom_salle")); 
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_LocalCombo1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -309,11 +360,6 @@ public class Interface extends javax.swing.JFrame {
         String ChoixLocal;
         Statement stmt1 = null;
         Statement stmt2 = null;
-        String[] ListeSalles = new String[3];
-        String Test1;
-        String Test2;
-        String Test3;
-        int i=0;
         int idLocalSelectionne=0;
         ChoixLocal =(String) LocalCombo2.getSelectedItem();
         String idLocal = "SELECT id_local FROM local WHERE nom_local='"+ChoixLocal+"'";
@@ -389,6 +435,58 @@ public class Interface extends javax.swing.JFrame {
         Supprimer_Salle_Interface inter= new Supprimer_Salle_Interface();
         inter.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void SalleCombo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalleCombo2ActionPerformed
+        String ChoixSalle;
+        Statement stmt1 = null;
+        Statement stmt2 = null;
+        int idSalleSelectionne=0;
+        ChoixSalle =(String) SalleCombo2.getSelectedItem();
+        String idSalle = "SELECT id_salle FROM salle WHERE nom_salle='"+ChoixSalle+"'";
+
+        try {
+            stmt1 = cnx.connection().createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ResultSet RidSalle = null;
+        try {
+            RidSalle = stmt1.executeQuery(idSalle);
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            while(RidSalle.next()){
+            idSalleSelectionne =  RidSalle.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        String Nomequipement = "SELECT nom_equipement FROM equipement WHERE id_salle='"+idSalleSelectionne+"'";
+        // System.out.println(idLocalSelectionne);
+        try {
+            stmt2 = cnx.connection().createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ResultSet ListeEquipement = null;
+        try {
+            ListeEquipement = stmt2.executeQuery(Nomequipement);
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        try {
+            AppareilCombo.removeAllItems();
+            while(ListeEquipement.next()){
+            AppareilCombo.addItem(ListeEquipement.getString("nom_equipement")); 
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_SalleCombo2ActionPerformed
 
     /**
      * @param args the command line arguments

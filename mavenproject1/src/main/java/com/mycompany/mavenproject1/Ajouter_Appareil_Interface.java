@@ -326,14 +326,15 @@ public class Ajouter_Appareil_Interface extends javax.swing.JFrame {
         else
             status = 1;
         try {
-            // a faire: incrementer le nombre d'equipement dans la salle concernée
             statement.executeUpdate("INSERT INTO equipement " + "VALUES (DEFAULT, '"+e.getcategorie()+"', "+idSalle+", " + status + ", '"+e.getadresseMac()+"', '"+e.getnomEquipement()+"', DEFAULT, "+idOS+")");
             JOptionPane.showMessageDialog(null, "L'appareil a bien été inserée");
         } catch (SQLException ex) {
             Logger.getLogger(Ajouter_Appareil_Interface.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Problem");
         }
-               // TODO add your handling code here:
+           // incrementer le nombre d'equipement dans la salle concernée
+           // statement.executeUpdate("UPDATE salle SET [nb_equipement]=[nb_equipement]+1");
+           
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void StatutComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StatutComboActionPerformed

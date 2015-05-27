@@ -18,7 +18,14 @@ public class Salle {
     private String nomSalle;
     private int numSalle;
         
-    
+    /**
+     *
+     * @param idLocal
+     * @param idSalle
+     * @param nombreEquipement
+     * @param nomSalle
+     * @param numSalle
+     */
     public Salle(int idLocal, int idSalle,int nombreEquipement, String nomSalle, int numSalle ){
         this.idLocal          = idLocal;
         this.idSalle          = idSalle;
@@ -27,22 +34,42 @@ public class Salle {
         this.numSalle         = numSalle;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getidLocal(){
         return idLocal;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getidSalle(){
         return idSalle;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getnombreEquipement(){
         return nombreEquipement;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getnomSalle(){
         return nomSalle;
     }
  
+    /**
+     *
+     * @return
+     */
     public int getnumSalle(){
         return numSalle;
     }

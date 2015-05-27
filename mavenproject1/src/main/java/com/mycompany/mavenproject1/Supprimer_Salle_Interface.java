@@ -85,7 +85,7 @@ public class Supprimer_Salle_Interface extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         LocalCombo = new javax.swing.JComboBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Veuillez sélectionner la salle à supprimer:");
 
