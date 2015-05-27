@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Exo
+ * @author Djeneba
  */
 public class Ajouter_Salle_Interface extends javax.swing.JFrame {
 Database_cnx cnx = new Database_cnx(); // connexion a la base de donnée

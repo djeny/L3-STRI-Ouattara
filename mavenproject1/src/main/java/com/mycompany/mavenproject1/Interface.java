@@ -1,6 +1,12 @@
 package com.mycompany.mavenproject1;
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /*
@@ -14,12 +20,61 @@ import javax.swing.JFrame;
  */
 public class Interface extends javax.swing.JFrame {
 
+    Database_cnx cnx = new Database_cnx();
     /**
      * Creates new form Interface
      */
     public Interface() {
         initComponents();
+       String insertLocal = "select nom_local FROM local"; 
+       String insertSalle = "select nom_salle FROM salle";
+       String insertOS = "select Nom_equipement FROM equipement";
+       
+        try {
+          // Creation des Statements
+          Statement stmt1 = cnx.connection().createStatement(); 
+          Statement stmt2 = cnx.connection().createStatement();
+          Statement stmt3 = cnx.connection().createStatement();
+          // L'execution des query et l'insertion des resultat dans ResultSet
+          ResultSet rsetLocal = stmt1.executeQuery(insertLocal);
+          ResultSet rsetSalle = stmt2.executeQuery(insertSalle);
+          ResultSet rsetAppareil = stmt3.executeQuery(insertOS);
+      
+           try {
+            while(rsetLocal.next())
+            {
+                // Tant qu'il y a des valeurs on les ajoute dans comboBox
+                LocalCombo1.addItem(rsetLocal.getString("nom_local"));
+                LocalCombo2.addItem(rsetLocal.getString("nom_local")); 
+            } 
+            
+            while(rsetSalle.next())
+            {
+             
+                SalleCombo1.addItem(rsetSalle.getString("nom_salle"));
+                SalleCombo2.addItem(rsetSalle.getString("nom_salle"));
+            } 
+            
+            while(rsetAppareil.next())
+            {
+             
+                AppareilCombo.addItem(rsetAppareil.getString("Nom_equipement"));
+            }
+            
+            
+            /** on ferme la connexion */ 
+            cnx.connection().close();
 
+        } catch (SQLException ex) {
+            System.out.println("Problème");
+         //   Logger.getLogger(Prets.class.getName()).log(Level.SEVERE, null, ex);
+        } //catch (ClassNotFoundException ex) {
+         //   Logger.getLogger(Prets.class.getName()).log(Level.SEVERE, null, ex);
+       // }
+    }
+    catch ( SQLException err ) {
+    System.out.println( err.getMessage( ) );
+    }
     }
 
     /**
@@ -33,8 +88,8 @@ public class Interface extends javax.swing.JFrame {
 
         jRadioButton1 = new javax.swing.JRadioButton();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jComboBox1 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
+        LocalCombo1 = new javax.swing.JComboBox();
+        SalleCombo1 = new javax.swing.JComboBox();
         jComboBox3 = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -42,9 +97,9 @@ public class Interface extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 32767));
         jLabel4 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox();
-        jComboBox5 = new javax.swing.JComboBox();
-        jComboBox6 = new javax.swing.JComboBox();
+        LocalCombo2 = new javax.swing.JComboBox();
+        SalleCombo2 = new javax.swing.JComboBox();
+        AppareilCombo = new javax.swing.JComboBox();
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -61,16 +116,13 @@ public class Interface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Local 1", "Local 2", "Local 3", "Local 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        LocalCombo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                LocalCombo1ActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Salle 1", "Salle 2", "Salle 3" }));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Portable", "Tabletees" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PC", "Portable", "Tablette", "Routeur", "Switch" }));
 
         jLabel1.setText("Locaux");
 
@@ -88,16 +140,11 @@ public class Interface extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 0, 51));
         jLabel4.setText("Logo");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Local 1", "Local 2", "Local 3", "Local 4" }));
-        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+        LocalCombo2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox4ActionPerformed(evt);
+                LocalCombo2ActionPerformed(evt);
             }
         });
-
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Salle 1", "Salle 2", "Salle 3" }));
-
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "LG Nexus", "Router 1" }));
 
         jButton2.setText("Update");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -127,6 +174,11 @@ public class Interface extends javax.swing.JFrame {
         });
 
         jButton7.setText("Supprimer une salle");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("Supprimer un appareil");
 
@@ -165,16 +217,16 @@ public class Interface extends javax.swing.JFrame {
                         .addGap(131, 131, 131))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LocalCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
-                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LocalCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SalleCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
                             .addComponent(jLabel2)
-                            .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(SalleCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -189,7 +241,7 @@ public class Interface extends javax.swing.JFrame {
                                         .addGap(37, 37, 37)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel5)
-                                            .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(AppareilCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel3))))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
@@ -206,8 +258,8 @@ public class Interface extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LocalCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SalleCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(50, 50, 50)
@@ -217,9 +269,9 @@ public class Interface extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AppareilCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LocalCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SalleCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -238,17 +290,71 @@ public class Interface extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void LocalCombo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LocalCombo1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_LocalCombo1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox4ActionPerformed
+    private void LocalCombo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LocalCombo2ActionPerformed
+        String ChoixLocal;
+        Statement stmt1 = null;
+        Statement stmt2 = null;
+        String[] ListeSalles = new String[3];
+        String Test1;
+        String Test2;
+        String Test3;
+        int i=0;
+        int idLocalSelectionne=0;
+        ChoixLocal =(String) LocalCombo2.getSelectedItem();
+        String idLocal = "SELECT id_local FROM local WHERE nom_local='"+ChoixLocal+"'";
+
+        try {
+            stmt1 = cnx.connection().createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ResultSet RidLocal = null;
+        try {
+            RidLocal = stmt1.executeQuery(idLocal);
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            while(RidLocal.next()){
+            idLocalSelectionne =  RidLocal.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        String idSalle = "SELECT nom_salle FROM salle WHERE id_local='"+idLocalSelectionne+"'";
+        // System.out.println(idLocalSelectionne);
+        try {
+            stmt2 = cnx.connection().createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ResultSet ListeSalle = null;
+        try {
+            ListeSalle = stmt2.executeQuery(idSalle);
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        try {
+            SalleCombo2.removeAllItems();
+            while(ListeSalle.next()){
+            SalleCombo2.addItem(ListeSalle.getString("nom_salle")); 
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_LocalCombo2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -271,6 +377,11 @@ public class Interface extends javax.swing.JFrame {
         Connexion c = new Connexion();
         c.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_Ajout_ConnexionActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        Supprimer_Salle_Interface inter= new Supprimer_Salle_Interface();
+        inter.setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -310,18 +421,18 @@ public class Interface extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Ajout_Connexion;
     private javax.swing.JButton Ajouter_Appareil;
+    private javax.swing.JComboBox AppareilCombo;
+    private javax.swing.JComboBox LocalCombo1;
+    private javax.swing.JComboBox LocalCombo2;
+    private javax.swing.JComboBox SalleCombo1;
+    private javax.swing.JComboBox SalleCombo2;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JComboBox jComboBox5;
-    private javax.swing.JComboBox jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
