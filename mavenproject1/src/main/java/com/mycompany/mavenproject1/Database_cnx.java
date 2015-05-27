@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Farid
+ * @author Alexandre
  */
 public class Database_cnx {
     

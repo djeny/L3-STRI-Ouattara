@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Farid
+ * @author Goktan
  */
 public class Connexion extends javax.swing.JFrame {
 
@@ -80,6 +80,7 @@ public class Connexion extends javax.swing.JFrame {
 
         jLabel3.setText("Appareil 2");
 
+        jLabel4.setFont(new java.awt.Font("Tempus Sans ITC", 1, 18)); // NOI18N
         jLabel4.setText("CONNECTER 2 APPAREILS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -104,9 +105,9 @@ public class Connexion extends javax.swing.JFrame {
                         .addGap(144, 144, 144)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(119, 119, 119)
+                        .addGap(73, 73, 73)
                         .addComponent(jLabel4)))
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,7 +125,7 @@ public class Connexion extends javax.swing.JFrame {
                     .addComponent(Eq2Combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addComponent(jButton1)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         pack();

@@ -7,7 +7,7 @@ package com.mycompany.mavenproject1;
 
 /**
  *
- * @author Djeneba
+ * @author Alex
  */
  
 public class Local {
