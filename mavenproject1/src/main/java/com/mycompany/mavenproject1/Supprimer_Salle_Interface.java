@@ -152,8 +152,8 @@ public class Supprimer_Salle_Interface extends javax.swing.JFrame {
 
     private void jButtonSupprimer_SalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimer_SalleActionPerformed
         Statement statement = null;
-    Statement stmt4 = null;
-    Statement stmt5 = null;
+        Statement stmt4 = null;
+        Statement stmt5 = null;
         String idsalle;
         String nomSalle;
         String idlocal;
