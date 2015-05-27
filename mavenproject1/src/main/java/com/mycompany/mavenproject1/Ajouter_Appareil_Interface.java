@@ -336,7 +336,6 @@ public class Ajouter_Appareil_Interface extends javax.swing.JFrame {
             Logger.getLogger(Ajouter_Appareil_Interface.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Problem");
         }
-        
                // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 

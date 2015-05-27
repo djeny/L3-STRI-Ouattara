@@ -16,13 +16,15 @@ public class Salle {
     private int    idSalle;
     private int    nombreEquipement;
     private String nomSalle;
+    private int numSalle;
         
     
-    public Salle(int idLocal, int idSalle,int nombreEquipement, String nomSalle ){
+    public Salle(int idLocal, int idSalle,int nombreEquipement, String nomSalle, int numSalle ){
         this.idLocal          = idLocal;
         this.idSalle          = idSalle;
         this.nombreEquipement = nombreEquipement;
         this.nomSalle         = nomSalle;
+        this.numSalle         = numSalle;
     }
     
     public int getidLocal(){
@@ -40,7 +42,10 @@ public class Salle {
     public String getnomSalle(){
         return nomSalle;
     }
-
+ 
+    public int getnumSalle(){
+        return numSalle;
+    }
  /* public static void main(String args[]) {
     
     Salle S = new Salle(5,8,0,"Daurat");
