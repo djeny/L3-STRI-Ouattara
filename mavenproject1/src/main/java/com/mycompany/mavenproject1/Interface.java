@@ -330,7 +330,7 @@ public class Interface extends javax.swing.JFrame {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
      
-        String idSalle = "SELECT nom_salle FROM salle WHERE id_local='"+idLocalSelectionne+"'";
+        String NomSalle = "SELECT nom_salle FROM salle WHERE id_local='"+idLocalSelectionne+"'";
         // System.out.println(idLocalSelectionne);
         try {
             stmt2 = cnx.connection().createStatement();
@@ -339,7 +339,7 @@ public class Interface extends javax.swing.JFrame {
         }
         ResultSet ListeSalle = null;
         try {
-            ListeSalle = stmt2.executeQuery(idSalle);
+            ListeSalle = stmt2.executeQuery(NomSalle);
         } catch (SQLException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }

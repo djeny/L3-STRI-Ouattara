@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -29,17 +30,17 @@ Database_cnx cnx = new Database_cnx(); // connexion a la base de donnée
         initComponents();
         
         //La requete qui recupère la liste des salles
-         String insertSalle = "select nom_salle FROM salle"; 
+         String insertLocal = "select nom_local FROM local"; 
          try {
           // Creation des Statements
              Statement stmt1 = cnx.connection().createStatement();
              // L'execution du query et l'insertion des resultat dans ResultSet
-          ResultSet rsetSalle = stmt1.executeQuery(insertSalle);
+          ResultSet rsetSalle = stmt1.executeQuery(insertLocal);
           try {
             while(rsetSalle.next())
             {
                 // Tant qu'il y a des valeurs on les ajoute dans comboBox
-                LocalCombo.addItem(rsetSalle.getString("nom_salle")); 
+                LocalCombo.addItem(rsetSalle.getString("nom_local")); 
             } 
                 
            /** on ferme la connexion */ 
@@ -230,10 +231,11 @@ Database_cnx cnx = new Database_cnx(); // connexion a la base de donnée
         
          try {
             statement.executeUpdate("INSERT INTO salle " + "VALUES (DEFAULT, '"+s.getnomSalle()+"','"+s.getnumSalle()+"', '" +s.getnombreEquipement()+ "', '"+s.getidLocal()+"')");
-            System.out.println("Inserted");
+             JOptionPane.showMessageDialog(null, "La salle a été ajoutée avec succès.");
         } catch (SQLException ex) {
             Logger.getLogger(Ajouter_Salle_Interface.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Problem");
+             JOptionPane.showMessageDialog(null, "La salle n'a pas été ajoutée avec succes.");
+
         }
             
         

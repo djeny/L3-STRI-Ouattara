@@ -242,7 +242,58 @@ public class Supprimer_Salle_Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSupprimer_SalleActionPerformed
 
     private void LocalComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LocalComboActionPerformed
-        // TODO add your handling code here:
+       String ChoixLocal;
+        Statement stmt1 = null;
+        Statement stmt2 = null;
+      //  String[] ListeSalles = new String[3];
+      
+      
+        int idLocalSelectionne=0;
+        ChoixLocal =(String) LocalCombo.getSelectedItem();
+        String idLocal = "SELECT id_local FROM local WHERE nom_local='"+ChoixLocal+"'";
+
+        try {
+            stmt1 = cnx.connection().createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ResultSet RidLocal = null;
+        try {
+            RidLocal = stmt1.executeQuery(idLocal);
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            while(RidLocal.next()){
+            idLocalSelectionne =  RidLocal.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        String NomSalle = "SELECT nom_salle FROM salle WHERE id_local='"+idLocalSelectionne+"'";
+        // System.out.println(idLocalSelectionne);
+        try {
+            stmt2 = cnx.connection().createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ResultSet ListeSalle = null;
+        try {
+            ListeSalle = stmt2.executeQuery(NomSalle);
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        try {
+            SalleCombo.removeAllItems();
+            while(ListeSalle.next()){
+            SalleCombo.addItem(ListeSalle.getString("nom_salle")); 
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_LocalComboActionPerformed
 
     /**
